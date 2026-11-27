@@ -3,6 +3,7 @@ import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayoutWithTags'
 import { allBlogs } from 'contentlayer/generated'
+import { getTagLabel } from '@/lib/tags'
 import tagData from 'app/tag-data.json'
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
@@ -14,9 +15,10 @@ export async function generateMetadata(props: {
 }): Promise<Metadata> {
   const params = await props.params
   const tag = decodeURI(params.tag)
+  const label = getTagLabel(tag)
   return genPageMetadata({
-    title: tag,
-    description: `${siteMetadata.title} ${tag} tagged content`,
+    title: label,
+    description: `${siteMetadata.title} ${label} 相关的文章`,
     alternates: {
       canonical: './',
       types: {
@@ -29,15 +31,14 @@ export async function generateMetadata(props: {
 export const generateStaticParams = async () => {
   const tagCounts = tagData as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
-  return tagKeys.map((tag) => ({
-    tag: encodeURI(tag),
-  }))
+  // 必须返回原始标签：Next 会用这个值生成 URL 并自行编码。
+  // 如果在这里先 encodeURI，中文标签会被编码两次（线上标题变成 %E7%AC%94…）。
+  return tagKeys.map((tag) => ({ tag }))
 }
 
 export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
   const params = await props.params
   const tag = decodeURI(params.tag)
-  const title = tag[0].toUpperCase() + tag.split(' ').join('-').slice(1)
   const filteredPosts = allCoreContent(
     sortPosts(allBlogs.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag)))
   )
@@ -53,7 +54,7 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
       posts={filteredPosts}
       initialDisplayPosts={initialDisplayPosts}
       pagination={pagination}
-      title={title}
+      title={getTagLabel(tag)}
     />
   )
 }
