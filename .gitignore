@@ -45,3 +45,37 @@ yarn-error.log*
 
 # Contentlayer
 .contentlayer
+
+# typescript incremental build info
+tsconfig.tsbuildinfo
+
+# ---------- 本地编辑器（不提交） ----------
+# JetBrains / WebStorm / IDEA
+.idea/
+*.iml
+# Vim
+*.swp
+*.swo
+*~
+# VS Code 的 Local History 插件
+.history/
+
+# 说明：.vscode/settings.json 是模板自带的项目级配置（Tailwind、ESLint 相关），
+# 对任何用 VS Code 的人都有用，所以保留在版本控制里，不忽略。
+
+# ---------- 只在本地保留、不进仓库的内容 ----------
+
+# 设计选型阶段的四个原型页（/design）。
+# 现在用的是选定的「卡片盒」，这些页面已不参与站点构建，
+# 也不应该出现在线上。想重新纳入仓库，删掉下面三行即可。
+/app/design
+/components/design
+/css/skins.css
+
+# 模板自带的英文示例文章，已从 data/blog 移出。
+# 只作本地参考，原始内容在 starter 仓库里也有。
+/starter-demo-backup
+
+# 截图工具产生的临时文件（无头 Chrome 的 profile 有上万个小文件）
+/.shots
+/.chrome-profile

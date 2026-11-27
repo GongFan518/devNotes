@@ -68,6 +68,7 @@ module.exports = () => {
     basePath,
     reactStrictMode: true,
     trailingSlash: true,
+    devIndicators: false,
     turbopack: {
       root: process.cwd(),
       rules: {

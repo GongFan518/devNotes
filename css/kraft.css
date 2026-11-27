@@ -1,0 +1,1531 @@
+/* ==========================================================================
+   地球Online生存日记 — 卡片盒
+   One sheet of CSS for the whole site: kraft desk, punched index cards,
+   a date stamp, and type that stays out of the way of the writing.
+   ========================================================================== */
+
+:root {
+  --k-desk: #dcd5c6;
+  --k-desk-deep: #d0c8b7;
+  --k-card: #fcfaf2;
+  --k-card-2: #f4efe2;
+  --k-card-3: #efe8d7;
+  --k-ink: #23211c;
+  --k-ink-2: #4a463d;
+  --k-mute: #7b7364;
+  --k-rule: rgba(35, 33, 28, 0.13);
+  --k-rule-soft: rgba(35, 33, 28, 0.08);
+  --k-stamp: #a23a32;
+  --k-blue: #2e4a62;
+  --k-serif: 'Noto Serif SC', 'Songti SC', SimSun, serif;
+  --k-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --k-mono: 'Courier New', Consolas, 'Cascadia Mono', monospace;
+  --k-shadow: 2px 3px 0 rgba(35, 33, 28, 0.1);
+  --k-col: 940px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--k-desk);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0 2px,
+    transparent 2px 6px
+  );
+  color: var(--k-ink);
+  font-family: var(--k-sans);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(162, 58, 50, 0.18);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--k-stamp);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ---------- shell ------------------------------------------------------- */
+
+.k-wrap {
+  max-width: var(--k-col);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.k-main {
+  min-height: 40vh;
+  padding-bottom: 88px;
+}
+
+/* ---------- header ------------------------------------------------------ */
+
+.k-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 26px 0 34px;
+  padding: 16px 22px 16px 44px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+}
+
+.k-header::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  margin-top: -6px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--k-desk);
+  box-shadow: inset 1px 1px 0 rgba(35, 33, 28, 0.35);
+}
+
+.k-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex: none;
+  min-width: 0;
+}
+
+.k-brand strong {
+  font-family: var(--k-serif);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.k-header-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  min-width: 0;
+}
+
+.k-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.k-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.k-nav a {
+  font-family: var(--k-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.06em;
+  color: var(--k-ink-2);
+  white-space: nowrap;
+  padding: 2px 0;
+  border-bottom: 1px solid transparent;
+}
+.k-nav a:hover {
+  color: var(--k-stamp);
+  border-bottom-color: rgba(162, 58, 50, 0.4);
+}
+.k-nav a[aria-current='page'] {
+  color: var(--k-ink);
+  border-bottom-color: var(--k-ink);
+}
+
+.k-tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+
+.k-tools button,
+.k-tools a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  color: var(--k-ink-2);
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+/* The hamburger only exists on small screens. */
+.k-tools .k-menu-btn {
+  display: none;
+}
+@media (max-width: 719px) {
+  .k-tools .k-menu-btn {
+    display: inline-flex;
+  }
+}
+.k-tools button:hover,
+.k-tools a:hover {
+  color: var(--k-stamp);
+  background: rgba(35, 33, 28, 0.05);
+}
+
+/* ---------- cards ------------------------------------------------------- */
+
+.k-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 26px 26px 22px 42px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+}
+
+.k-card::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 23px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--k-desk);
+  box-shadow: inset 1px 1px 0 rgba(35, 33, 28, 0.35);
+}
+
+.k-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 28px;
+}
+
+.k-grid > *:nth-child(odd) {
+  transform: rotate(0.4deg);
+}
+.k-grid > *:nth-child(even) {
+  transform: rotate(-0.35deg);
+  margin-top: 14px;
+}
+.k-grid > *:nth-child(3n) {
+  background: var(--k-card-2);
+}
+
+.k-card h2,
+.k-card h3 {
+  font-family: var(--k-serif);
+  font-weight: 600;
+  font-size: 19px;
+  line-height: 1.55;
+  margin: 0 0 10px;
+  letter-spacing: 0.005em;
+}
+
+.k-card h2 a:hover,
+.k-card h3 a:hover {
+  color: var(--k-stamp);
+}
+
+.k-card p {
+  margin: 0 0 18px;
+  color: var(--k-ink-2);
+  font-size: 13.5px;
+  line-height: 1.8;
+}
+
+.k-card-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid var(--k-rule-soft);
+  font-family: var(--k-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--k-mute);
+}
+
+.k-tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  color: var(--k-blue);
+  font-family: var(--k-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+.k-tags a:hover {
+  color: var(--k-stamp);
+}
+
+.k-stamp {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid rgba(162, 58, 50, 0.55);
+  border-radius: 2px;
+  color: var(--k-stamp);
+  transform: rotate(-3deg);
+  white-space: nowrap;
+  letter-spacing: 0.08em;
+  font-family: var(--k-mono);
+  font-size: 11px;
+}
+.k-stamp--alt {
+  color: var(--k-blue);
+  border-color: rgba(46, 74, 98, 0.5);
+}
+
+/* ---------- home -------------------------------------------------------- */
+
+.k-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 44px;
+  padding: 34px 40px 30px 54px;
+  margin-bottom: 52px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+  transform: rotate(-0.5deg);
+}
+
+.k-hero::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 26px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--k-desk);
+  box-shadow: inset 1px 1px 0 rgba(35, 33, 28, 0.35);
+}
+
+.k-hero h1 {
+  font-family: var(--k-serif);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.5;
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+.k-hero p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.9;
+  max-width: 30em;
+}
+
+.k-hero-rule {
+  height: 1px;
+  background: repeating-linear-gradient(
+    to right,
+    rgba(35, 33, 28, 0.22) 0 6px,
+    transparent 6px 12px
+  );
+  margin: 20px 0 14px;
+}
+
+.k-hero-sig {
+  font-family: var(--k-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  color: var(--k-mute);
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.k-home-foot {
+  margin-top: 56px;
+  display: flex;
+  gap: 22px;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-family: var(--k-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  color: var(--k-mute);
+}
+.k-home-foot a {
+  border-bottom: 1px solid rgba(106, 99, 85, 0.45);
+}
+.k-home-foot a:hover {
+  color: var(--k-stamp);
+  border-color: rgba(162, 58, 50, 0.5);
+}
+
+/* ---------- page headings ---------------------------------------------- */
+
+.k-page-head {
+  margin: 0 0 28px;
+}
+
+.k-page-head h1 {
+  font-family: var(--k-serif);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.4;
+  margin: 0 0 6px;
+}
+
+.k-page-head p {
+  margin: 0;
+  color: var(--k-mute);
+  font-size: 13.5px;
+}
+
+/* ---------- search field ----------------------------------------------- */
+
+.k-search {
+  position: relative;
+  max-width: 420px;
+  margin: 18px 0 4px;
+}
+
+.k-search input {
+  width: 100%;
+  padding: 9px 34px 9px 13px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  border-radius: 2px;
+  color: var(--k-ink);
+  font-family: var(--k-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  box-shadow: none;
+}
+.k-search input::placeholder {
+  color: var(--k-mute);
+}
+.k-search input:focus {
+  outline: 2px solid var(--k-stamp);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+.k-search svg {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 15px;
+  height: 15px;
+  color: var(--k-mute);
+  pointer-events: none;
+}
+
+/* ---------- list pages: rail + cards ----------------------------------- */
+
+.k-withrail {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  gap: 30px;
+  align-items: start;
+}
+
+.k-rail {
+  position: sticky;
+  top: 20px;
+  padding: 22px 20px 18px 22px;
+  background: var(--k-card-3);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+  transform: rotate(-0.4deg);
+}
+
+.k-rail h2 {
+  font-family: var(--k-mono);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--k-mute);
+  margin: 0 0 14px;
+}
+
+.k-rail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.k-rail li {
+  margin: 0 0 9px;
+}
+
+.k-rail li a,
+.k-rail li span {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--k-ink-2);
+  border-bottom: 1px dashed transparent;
+  padding-bottom: 2px;
+}
+.k-rail li a:hover {
+  color: var(--k-stamp);
+  border-bottom-color: rgba(162, 58, 50, 0.35);
+}
+.k-rail li a[aria-current='page'] {
+  color: var(--k-ink);
+  font-weight: 600;
+}
+.k-rail .k-count {
+  font-family: var(--k-mono);
+  font-size: 11px;
+  color: var(--k-mute);
+}
+
+/* Inside the rail the cards stack: the column is too narrow for two up. */
+.k-withrail .k-grid {
+  grid-template-columns: 1fr;
+}
+.k-withrail .k-grid > * {
+  transform: none;
+  margin-top: 0;
+}
+.k-withrail .k-card p {
+  max-width: 56em;
+}
+
+/* ---------- article ----------------------------------------------------- */
+
+.k-article {
+  position: relative;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+  padding: 44px 52px 40px 56px;
+}
+
+.k-article::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: 30px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--k-desk);
+  box-shadow: inset 1px 1px 0 rgba(35, 33, 28, 0.35);
+}
+
+.k-article-head {
+  padding-bottom: 26px;
+  margin-bottom: 30px;
+  border-bottom: 1px dashed var(--k-rule);
+}
+
+.k-article-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.k-article h1 {
+  font-family: var(--k-serif);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.k-article-lede {
+  margin: 14px 0 0;
+  color: var(--k-mute);
+  font-size: 14.5px;
+  line-height: 1.85;
+  max-width: 40em;
+}
+
+.k-article-foot {
+  margin-top: 40px;
+  padding-top: 22px;
+  border-top: 1px dashed var(--k-rule);
+}
+
+.k-prevnext {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin: 22px 0 0;
+}
+
+.k-prevnext div {
+  min-width: 0;
+}
+
+.k-prevnext h2 {
+  font-family: var(--k-mono);
+  font-size: 10.5px;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  color: var(--k-mute);
+  margin: 0 0 6px;
+}
+
+.k-prevnext a {
+  font-size: 14px;
+  color: var(--k-ink);
+  border-bottom: 1px dashed var(--k-mute);
+}
+.k-prevnext a:hover {
+  color: var(--k-stamp);
+  border-color: rgba(162, 58, 50, 0.5);
+}
+
+.k-back {
+  display: inline-block;
+  margin-top: 24px;
+  font-family: var(--k-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--k-mute);
+  border-bottom: 1px solid var(--k-rule);
+}
+.k-back:hover {
+  color: var(--k-stamp);
+  border-color: rgba(162, 58, 50, 0.5);
+}
+
+.k-comments {
+  margin-top: 34px;
+  padding: 24px 26px;
+  background: var(--k-card-2);
+  border: 1px dashed var(--k-rule);
+}
+
+/* ---------- reading typography ----------------------------------------- */
+
+.k-prose {
+  max-width: 38em;
+  font-size: 16.5px;
+  line-height: 1.95;
+  color: var(--k-ink);
+}
+
+.k-prose > * + * {
+  margin-top: 1.15em;
+}
+
+/* No margin here: the sibling rule above owns vertical rhythm. */
+.k-prose p {
+  text-wrap: pretty;
+}
+
+.k-prose h1,
+.k-prose h2,
+.k-prose h3,
+.k-prose h4 {
+  font-family: var(--k-serif);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  margin-top: 2.1em;
+  margin-bottom: 0.6em;
+  color: var(--k-ink);
+}
+.k-prose h1 {
+  font-size: 1.6em;
+}
+.k-prose h2 {
+  font-size: 1.35em;
+}
+.k-prose h3 {
+  font-size: 1.15em;
+}
+.k-prose h4 {
+  font-size: 1.02em;
+}
+
+.k-prose a {
+  color: var(--k-stamp);
+  border-bottom: 1px solid rgba(162, 58, 50, 0.35);
+}
+.k-prose a:hover {
+  border-bottom-color: var(--k-stamp);
+}
+
+.k-prose strong {
+  font-weight: 600;
+  color: var(--k-ink);
+}
+
+.k-prose ul,
+.k-prose ol {
+  margin: 1.15em 0 0;
+  padding-left: 1.35em;
+}
+.k-prose li {
+  margin: 0.35em 0;
+}
+.k-prose li::marker {
+  color: var(--k-mute);
+}
+
+.k-prose blockquote {
+  margin: 1.6em 0;
+  padding: 2px 0 2px 20px;
+  border-left: 2px dashed rgba(162, 58, 50, 0.45);
+  color: var(--k-ink-2);
+  font-size: 0.97em;
+}
+.k-prose blockquote p {
+  margin: 0;
+}
+
+.k-prose hr {
+  margin: 2.4em 0;
+  border: 0;
+  border-top: 1px dashed var(--k-rule);
+}
+
+.k-prose code {
+  font-family: var(--k-mono);
+  font-size: 0.86em;
+  background: rgba(35, 33, 28, 0.07);
+  padding: 0.15em 0.4em;
+  border-radius: 2px;
+  color: var(--k-ink);
+}
+
+.k-prose pre {
+  background: #211f1a;
+  color: #ece6d8;
+  border-radius: 2px;
+  padding: 18px 20px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.7;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+.k-prose pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+/* A few Prism token colours, warm enough to sit on the dark block. */
+.k-prose pre .token.comment,
+.k-prose pre .token.prolog,
+.k-prose pre .token.doctype,
+.k-prose pre .token.cdata {
+  color: #8b8476;
+}
+.k-prose pre .token.punctuation {
+  color: #b6afa0;
+}
+.k-prose pre .token.keyword,
+.k-prose pre .token.atrule,
+.k-prose pre .token.important {
+  color: #e0a355;
+}
+.k-prose pre .token.string,
+.k-prose pre .token.attr-value,
+.k-prose pre .token.regex {
+  color: #a9c07c;
+}
+.k-prose pre .token.number,
+.k-prose pre .token.boolean,
+.k-prose pre .token.constant {
+  color: #d98a6a;
+}
+.k-prose pre .token.function,
+.k-prose pre .token.class-name,
+.k-prose pre .token.tag {
+  color: #8fb8d0;
+}
+.k-prose pre .token.operator,
+.k-prose pre .token.entity,
+.k-prose pre .token.url,
+.k-prose pre .token.variable {
+  color: #d8d2c4;
+}
+.k-prose pre .token.property,
+.k-prose pre .token.attr-name {
+  color: #c8a9d8;
+}
+
+.k-prose :where(h1, h2, h3, h4) > a,
+.k-prose .content-header-link {
+  color: inherit;
+  border-bottom: 0;
+}
+.k-prose .content-header-link {
+  opacity: 0;
+  margin-left: -22px;
+  padding-right: 4px;
+  transition: opacity 120ms ease;
+}
+.k-prose .content-header:hover .content-header-link {
+  opacity: 0.45;
+}
+
+.k-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+  margin: 1.6em 0;
+}
+.k-prose th {
+  text-align: left;
+  font-family: var(--k-mono);
+  font-size: 0.8em;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  color: var(--k-mute);
+  border-bottom: 1px solid var(--k-rule);
+  padding: 8px 12px 8px 0;
+}
+.k-prose td {
+  border-bottom: 1px solid var(--k-rule-soft);
+  padding: 9px 12px 9px 0;
+  vertical-align: top;
+}
+
+.k-prose img {
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+  margin: 1.6em 0;
+}
+
+.k-prose .footnotes {
+  margin-top: 3em;
+  padding-top: 1.6em;
+  border-top: 1px dashed var(--k-rule);
+  font-size: 0.9em;
+  color: var(--k-ink-2);
+}
+
+.k-prose .task-list-item::before {
+  display: none;
+}
+.k-prose .task-list-item {
+  list-style: none;
+}
+
+/* ---------- tags index -------------------------------------------------- */
+
+.k-tagcloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.k-tagcloud a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  padding: 7px 13px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: 1px 2px 0 rgba(35, 33, 28, 0.08);
+  font-size: 13.5px;
+  color: var(--k-ink);
+}
+.k-tagcloud a:hover {
+  color: var(--k-stamp);
+  border-color: rgba(162, 58, 50, 0.4);
+}
+.k-tagcloud .k-count {
+  font-family: var(--k-mono);
+  font-size: 11px;
+  color: var(--k-mute);
+}
+
+/* ---------- about ------------------------------------------------------- */
+
+.k-about {
+  display: grid;
+  grid-template-columns: 216px minmax(0, 1fr);
+  gap: 40px;
+  align-items: start;
+}
+
+.k-about-side {
+  position: relative;
+  padding: 26px 22px 22px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+  transform: rotate(-0.5deg);
+  text-align: center;
+}
+
+.k-about-side img {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  border: 3px solid var(--k-card-3);
+  display: block;
+  margin: 0 auto 14px;
+}
+
+/* Shown until a real photo is dropped in (data/authors/*.mdx → avatar). */
+.k-avatar-fallback {
+  display: grid;
+  place-items: center;
+  width: 132px;
+  height: 132px;
+  margin: 0 auto 14px;
+  border-radius: 50%;
+  background: var(--k-card-3);
+  border: 1px dashed rgba(35, 33, 28, 0.22);
+  font-family: var(--k-serif);
+  font-size: 46px;
+  font-weight: 600;
+  color: var(--k-ink-2);
+  line-height: 1;
+}
+
+.k-about-side strong {
+  display: block;
+  font-family: var(--k-serif);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.45;
+  word-break: keep-all;
+}
+
+.k-about-side p {
+  margin: 4px 0 0;
+  color: var(--k-mute);
+  font-size: 12.5px;
+}
+
+.k-about-social {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+  color: var(--k-ink-2);
+}
+
+/* ---------- buttons / 404 ---------------------------------------------- */
+
+.k-btn {
+  display: inline-block;
+  padding: 9px 18px;
+  background: var(--k-ink);
+  color: var(--k-card);
+  font-family: var(--k-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  border: 1px solid var(--k-ink);
+}
+.k-btn:hover {
+  background: var(--k-stamp);
+  border-color: var(--k-stamp);
+}
+
+.k-404 {
+  position: relative;
+  padding: 56px 52px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.k-404 strong {
+  font-family: var(--k-serif);
+  font-size: 72px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--k-mute);
+}
+
+.k-404 h1 {
+  font-family: var(--k-serif);
+  font-size: 22px;
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+
+.k-404 p {
+  margin: 0 0 18px;
+  color: var(--k-ink-2);
+  font-size: 14px;
+}
+
+/* ---------- pagination / misc ------------------------------------------ */
+
+.k-pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 34px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--k-rule);
+  font-family: var(--k-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--k-mute);
+}
+.k-pagination a:hover {
+  color: var(--k-stamp);
+}
+.k-pagination span {
+  color: var(--k-mute);
+}
+.k-pagination button {
+  border: 0;
+  background: none;
+  font: inherit;
+  color: var(--k-mute);
+  opacity: 0.45;
+  padding: 0;
+}
+
+.k-empty {
+  padding: 40px 0;
+  font-family: var(--k-mono);
+  font-size: 12.5px;
+  color: var(--k-mute);
+}
+
+/* ---------- mobile nav overlay ----------------------------------------- */
+
+.k-mobile-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: var(--k-desk);
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0 2px,
+    transparent 2px 6px
+  );
+  overflow-y: auto;
+  padding: 28px 24px;
+}
+
+.k-mobile-panel nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: var(--k-shadow);
+  padding: 24px 26px;
+  margin-bottom: 18px;
+}
+
+.k-mobile-panel nav a {
+  font-family: var(--k-serif);
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--k-ink);
+  border-bottom: 1px dashed var(--k-rule);
+  padding-bottom: 12px;
+}
+.k-mobile-panel nav a:hover {
+  color: var(--k-stamp);
+}
+
+.k-mobile-close {
+  display: block;
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--k-rule);
+  background: var(--k-card);
+  color: var(--k-ink);
+  cursor: pointer;
+}
+
+/* ---------- responsive -------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .k-hero {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 28px 24px 24px 44px;
+  }
+  .k-withrail {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .k-rail {
+    position: static;
+    transform: none;
+  }
+  .k-rail ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+  }
+  .k-rail li {
+    margin: 0;
+  }
+  .k-rail li a,
+  .k-rail li span {
+    gap: 6px;
+  }
+  .k-article {
+    padding: 30px 22px 30px 40px;
+  }
+  .k-article h1 {
+    font-size: 25px;
+  }
+  .k-about {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .k-404 {
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding: 34px 26px;
+  }
+  .k-prevnext {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .k-header {
+    margin: 14px 0 22px;
+    padding: 12px 14px 12px 38px;
+    gap: 12px;
+  }
+  .k-nav {
+    display: none;
+  }
+  .k-grid {
+    grid-template-columns: 1fr;
+  }
+  .k-grid > *:nth-child(even) {
+    margin-top: 0;
+  }
+  .k-grid > *:nth-child(odd),
+  .k-grid > *:nth-child(even) {
+    transform: none;
+  }
+  .k-page-head h1 {
+    font-size: 25px;
+  }
+  .k-hero h1 {
+    font-size: 26px;
+  }
+  .k-prose {
+    font-size: 16px;
+    line-height: 1.9;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   Additions: lead card, misc bits, and overrides for third-party components
+   ========================================================================== */
+
+.k-grid > .k-lead {
+  grid-column: 1 / -1;
+  margin-top: 0;
+  padding: 32px 34px 26px 46px;
+}
+
+.k-lead h2 {
+  font-size: 23px;
+  line-height: 1.45;
+}
+
+.k-lead p {
+  font-size: 14px;
+  max-width: 48em;
+  margin-bottom: 20px;
+}
+
+.k-card-flag {
+  position: absolute;
+  right: 20px;
+  top: 16px;
+  font-family: var(--k-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--k-stamp);
+  opacity: 0.9;
+}
+
+/* Position marker for ordered lists (collections). */
+.k-card-index {
+  position: absolute;
+  right: 20px;
+  top: 15px;
+  font-family: var(--k-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--k-mute);
+}
+
+/* An ordered collection reads as a sequence: no vertical stagger. */
+.k-grid--ordered > *:nth-child(n) {
+  margin-top: 0;
+}
+
+.k-collection-count {
+  font-family: var(--k-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--k-mute);
+}
+
+/* "Read inside a collection" line, above the article title. */
+.k-collection-line {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  color: var(--k-mute);
+}
+.k-collection-line a {
+  color: var(--k-stamp);
+  border-bottom: 1px dashed rgba(162, 58, 50, 0.45);
+}
+.k-collection-line a:hover {
+  border-bottom-style: solid;
+}
+.k-collection-pos {
+  font-family: var(--k-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+}
+
+.k-page-title {
+  font-family: var(--k-serif);
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 1.4;
+  margin: 0 0 20px;
+}
+
+.k-byline {
+  font-family: var(--k-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.08em;
+  color: var(--k-mute);
+}
+
+.k-rail li span[aria-current='page'] {
+  color: var(--k-ink);
+  font-weight: 600;
+}
+
+.k-count {
+  font-style: normal;
+  font-family: var(--k-mono);
+  font-size: 11px;
+  color: var(--k-mute);
+}
+
+/* Floating article tools */
+.k-floattools {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+.k-floattools[data-show='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}
+.k-floattools button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--k-rule);
+  background: var(--k-card);
+  color: var(--k-ink-2);
+  box-shadow: var(--k-shadow);
+  cursor: pointer;
+}
+.k-floattools button:hover {
+  color: var(--k-stamp);
+}
+
+/* Third-party bits that carry their own utility classes */
+.k-tools button,
+.k-tools a {
+  background: transparent !important;
+  border-radius: 2px !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+.k-tools button svg,
+.k-tools a svg {
+  width: 18px !important;
+  height: 18px !important;
+  color: inherit !important;
+}
+
+.k-about-social svg {
+  width: 18px;
+  height: 18px;
+  color: currentColor;
+  fill: currentColor;
+}
+
+.k-about-social a {
+  color: var(--k-ink-2);
+}
+.k-about-social a:hover {
+  color: var(--k-stamp);
+}
+
+.k-mobile-root {
+  position: relative;
+  z-index: 70;
+}
+
+.k-prose > :first-child {
+  margin-top: 0;
+}
+
+.markdown-alert {
+  margin: 1.6em 0;
+  padding: 14px 18px;
+  border-left: 2px solid var(--k-blue);
+  background: var(--k-card-2);
+  font-size: 0.95em;
+}
+
+@media (max-width: 720px) {
+  .k-grid > .k-lead {
+    padding: 26px 22px 22px 42px;
+  }
+  .k-lead h2 {
+    font-size: 20px;
+  }
+  .k-card-flag {
+    position: static;
+    display: block;
+    margin-bottom: 8px;
+  }
+}
+
+/* ==========================================================================
+   Search dialog
+   ========================================================================== */
+
+.k-searchmodal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh 20px 20px;
+}
+
+.k-searchmodal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(35, 33, 28, 0.45);
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: default;
+}
+
+.k-searchbox {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 560px;
+  max-height: 70vh;
+  background: var(--k-card);
+  border: 1px solid var(--k-rule);
+  box-shadow: 5px 7px 0 rgba(35, 33, 28, 0.18);
+}
+
+.k-searchbox-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 16px;
+  border-bottom: 1px dashed var(--k-rule);
+  flex: none;
+}
+
+.k-searchbox-head svg {
+  width: 16px;
+  height: 16px;
+  color: var(--k-mute);
+  flex: none;
+}
+
+.k-searchbox-head input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+  /* @tailwindcss/forms paints a blue focus ring as a box-shadow on text inputs. */
+  box-shadow: none;
+  font-family: var(--k-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--k-ink);
+}
+.k-searchbox-head input:focus,
+.k-searchbox-head input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+.k-searchbox-head:focus-within {
+  border-bottom-color: rgba(162, 58, 50, 0.45);
+}
+.k-searchbox-head input::placeholder {
+  color: var(--k-mute);
+}
+
+.k-searchbox-head kbd {
+  flex: none;
+  font-family: var(--k-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--k-mute);
+  border: 1px solid var(--k-rule);
+  padding: 2px 5px;
+  border-radius: 2px;
+}
+
+.k-searchbox-body {
+  overflow-y: auto;
+  padding: 6px 0 8px;
+}
+
+.k-searchbox-body .k-empty {
+  padding: 26px 16px;
+  margin: 0;
+}
+
+.k-searchresults {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.k-searchresults a {
+  display: block;
+  padding: 9px 16px;
+  border-left: 2px solid transparent;
+}
+.k-searchresults a.is-active,
+.k-searchresults a:hover {
+  background: var(--k-card-2);
+  border-left-color: var(--k-stamp);
+}
+
+.k-sr-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.k-sr-title {
+  font-family: var(--k-serif);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--k-ink);
+}
+
+.k-sr-date {
+  flex: none;
+  font-family: var(--k-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  color: var(--k-mute);
+}
+
+.k-sr-sum {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--k-mute);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.k-searchbox-foot {
+  display: flex;
+  gap: 16px;
+  flex: none;
+  padding: 8px 16px;
+  border-top: 1px dashed var(--k-rule);
+  font-family: var(--k-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--k-mute);
+}
+
+@media (max-width: 720px) {
+  .k-searchmodal {
+    padding: 8vh 14px 14px;
+  }
+  .k-searchbox {
+    max-height: 78vh;
+  }
+  .k-searchbox-foot {
+    display: none;
+  }
+}
